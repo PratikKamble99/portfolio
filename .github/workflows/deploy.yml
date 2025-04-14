@@ -1,0 +1,40 @@
+name: CI/CD with GitHub Actions
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-delpoys:
+    runs-on: ubuntu-latest@v3
+
+    steps:
+      ## Checkout code repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      ## Setup node
+      # - name: Setup NodeJS
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 18
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.0
+
+      ## Install dependencies
+      - name: Install Dependencies
+        run: bun install
+
+      ## Build Projtect
+      - name: Build Project
+        run: bun run build
+
+      ## delpoy to github pages
+      - name: Deploy to github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
