@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-delpoys:
-    runs-on: ubuntu-latest@v3
+    runs-on: ubuntu-latest
 
     steps:
       ## Checkout code repository
