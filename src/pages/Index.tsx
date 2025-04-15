@@ -1,6 +1,8 @@
 
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
+import { Skills } from "@/components/Skills";
+import { Experience } from "@/components/Experience";
 import { Projects } from "@/components/Projects";
 import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
@@ -12,6 +14,8 @@ const Index = () => {
       <Header />
       <main className="flex-1">
         <Hero />
+        <Skills />
+        <Experience />
         <Projects />
         <About />
         <Contact />
@@ -22,3 +26,4 @@ const Index = () => {
 };
 
 export default Index;
+
