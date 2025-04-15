@@ -1,4 +1,3 @@
-
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -7,8 +6,8 @@ import { Textarea } from "@/components/ui/textarea";
 
 export function Contact() {
   return (
-    <section id="contact" className="section bg-muted/30">
-      <div className="container">
+    <section id="contact" className="section min-h-screen bg-muted/30">
+      <div className="container h-full">
         <div className="mb-12 md:mb-16 text-center">
           <h2 className="text-2xl md:text-4xl font-display font-bold mb-4">
             Let's Work Together
@@ -18,10 +17,10 @@ export function Contact() {
           </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-2">
-          <Card>
-            <CardContent className="pt-6">
-              <form className="space-y-6">
+        <div className="grid gap-8 lg:grid-cols-2 h-[calc(100vh-20rem)]">
+          <Card className="h-full">
+            <CardContent className="h-full flex flex-col p-6">
+              <form className="space-y-6 flex-1 flex flex-col">
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div className="space-y-2">
                     <Input placeholder="Name" />
@@ -33,8 +32,8 @@ export function Contact() {
                 <div className="space-y-2">
                   <Input placeholder="Subject" />
                 </div>
-                <div className="space-y-2">
-                  <Textarea placeholder="Message" className="min-h-[150px]" />
+                <div className="space-y-2 flex-1">
+                  <Textarea placeholder="Message" className="h-full min-h-[150px] resize-none" />
                 </div>
                 <Button type="submit" className="w-full">
                   Send Message
@@ -43,7 +42,7 @@ export function Contact() {
             </CardContent>
           </Card>
 
-          <div className="space-y-6">
+          <div className="space-y-6 h-full flex flex-col">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                 <Mail className="h-5 w-5" />
