@@ -1,16 +1,27 @@
-
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { name: "Home", href: "#home" },
+  { name: "Home", href: "#" },
   { name: "Experience", href: "#experience" },
   { name: "Projects", href: "#projects" },
   { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" },
 ];
+
+export const Logo = () => (
+  <div className="flex items-center gap-2">
+    <img
+      className="h-10 w-10 rounded-full outline outline-offset-2 outline-primary"
+      src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    />
+    <a href="#" className="text-2xl font-display font-bold">
+      Pratik Kamble
+    </a>
+  </div>
+);
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -18,11 +29,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b backdrop-blur-md bg-background/80">
       <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-2">
-          <a href="#" className="text-2xl font-display font-bold">
-            PORTFOLIO
-          </a>
-        </div>
+        <Logo />
 
         <nav className="hidden md:flex items-center gap-6">
           {navItems.map((item) => (
@@ -38,9 +45,9 @@ export function Header() {
 
         <div className="flex items-center gap-4">
           <ThemeToggle />
-          
+
           <Button className="hidden md:flex">Get in Touch</Button>
-          
+
           <Button
             variant="ghost"
             size="icon"
@@ -80,7 +87,9 @@ export function Header() {
                 {item.name}
               </a>
             ))}
-            <Button className="mt-4">Get in Touch</Button>
+            <a href="#contact">
+              <Button className="mt-4">Get in Touch</Button>
+            </a>
           </nav>
         </div>
       )}

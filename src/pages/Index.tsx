@@ -1,4 +1,3 @@
-
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Skills } from "@/components/Skills";
@@ -15,7 +14,7 @@ const Index = () => {
   useEffect(() => {
     // Register GSAP plugins
     gsap.registerPlugin(ScrollTrigger);
-    
+
     // Add smooth scrolling to all sections
     const sections = document.querySelectorAll("section");
     sections.forEach((section) => {
@@ -25,13 +24,13 @@ const Index = () => {
         toggleClass: { targets: section, className: "active" },
       });
     });
-    
+
     return () => {
       // Clean up ScrollTrigger instances
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
-  
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
