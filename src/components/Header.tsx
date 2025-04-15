@@ -45,8 +45,9 @@ export function Header() {
 
         <div className="flex items-center gap-4">
           <ThemeToggle />
-
-          <Button className="hidden md:flex">Get in Touch</Button>
+          <a href="#contact">
+            <Button className="hidden md:flex">Get in Touch</Button>
+          </a>
 
           <Button
             variant="ghost"
@@ -64,9 +65,7 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 bg-background">
           <div className="container flex h-16 items-center justify-between">
-            <a href="#" className="text-2xl font-display font-bold">
-              PORTFOLIO
-            </a>
+            <Logo />
             <Button
               variant="ghost"
               size="icon"
@@ -76,7 +75,7 @@ export function Header() {
               <span className="sr-only">Close menu</span>
             </Button>
           </div>
-          <nav className="container grid gap-6 py-8">
+          <nav className="container grid gap-6 py-8 border-b bg-background">
             {navItems.map((item) => (
               <a
                 key={item.name}
