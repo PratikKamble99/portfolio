@@ -29,7 +29,7 @@ jobs:
       - name: Build Project
         run: bun run build
         env:
-          BASE_URL: /portfolio/
+          BASE_URL: /portfolio
 
       ## Deploy to github pages
       - name: Deploy to GitHub Pages
