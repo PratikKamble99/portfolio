@@ -1,42 +1,92 @@
 
+import { useEffect, useRef } from "react";
 import { ArrowDownCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import gsap from "gsap";
 
 export function Hero() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const subheadingRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    
+    tl.fromTo(
+      headingRef.current,
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1 }
+    )
+      .fromTo(
+        subheadingRef.current,
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8 },
+        "-=0.6"
+      )
+      .fromTo(
+        ctaRef.current,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6 },
+        "-=0.4"
+      )
+      .fromTo(
+        imageRef.current,
+        { scale: 0.9, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 1 },
+        "-=0.8"
+      );
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
   return (
-    <section id="home" className="section pt-28 md:pt-36 overflow-hidden">
+    <section id="home" ref={heroRef} className="section pt-28 md:pt-36 overflow-hidden bg-gradient-to-b from-background to-background/80">
       <div className="container">
-        <div className="grid gap-8 md:gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-          <div className="space-y-6 animate-fade-in">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-tight">
-              Creative Developer & Designer
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground">
-              I build exceptional digital experiences that inspire and connect with your audience.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="gap-2">
-                View Projects <ArrowDownCircle className="h-4 w-4" />
-              </Button>
-              <Button size="lg" variant="outline">
-                Contact Me
-              </Button>
-            </div>
+        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+          <h1 
+            ref={headingRef}
+            className="text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70"
+          >
+            From idea to scale.<br />Simplified.
+          </h1>
+          
+          <p 
+            ref={subheadingRef}
+            className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl"
+          >
+            I build exceptional digital experiences that inspire and connect with your audience, 
+            turning your vision into reality with modern technologies.
+          </p>
+          
+          <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 mb-16">
+            <Button size="lg" className="gap-2 text-base px-8 py-6">
+              View Projects <ArrowDownCircle className="h-4 w-4" />
+            </Button>
+            <Button size="lg" variant="outline" className="text-base px-8 py-6">
+              Contact Me
+            </Button>
           </div>
           
-          <div className="relative animate-fade-in">
-            <div className="bg-primary/5 dark:bg-primary/10 aspect-square rounded-full overflow-hidden relative">
-              <img
-                src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&w=800"
-                alt="Hero image"
-                className="object-cover w-full h-full"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/60"></div>
-            </div>
-            <div className="absolute -bottom-4 right-12 px-6 py-4 bg-card shadow-lg rounded-lg">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="font-medium">Available for work</span>
+          <div 
+            ref={imageRef} 
+            className="relative w-full max-w-3xl mx-auto mt-4 p-6 rounded-lg bg-card/50 backdrop-blur-sm border border-primary/10 shadow-lg"
+          >
+            <div className="bg-muted/30 rounded-md p-2 font-mono text-sm overflow-hidden">
+              <div className="flex items-center gap-2 text-muted-foreground mb-2">
+                <span className="flex gap-1">
+                  <span className="h-3 w-3 rounded-full bg-red-500"></span>
+                  <span className="h-3 w-3 rounded-full bg-yellow-500"></span>
+                  <span className="h-3 w-3 rounded-full bg-green-500"></span>
+                </span>
+                <span>terminal</span>
+              </div>
+              <div className="text-left">
+                <span className="text-primary/80">$</span> <span className="text-primary">npx create-portfolio@latest init --name="Your Name"</span>
+                <div className="blink-cursor inline-block h-5 w-2 ml-1 bg-primary"></div>
               </div>
             </div>
           </div>
