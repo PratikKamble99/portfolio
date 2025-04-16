@@ -96,6 +96,55 @@
     transform: translateY(20px);
     transition: all 0.5s ease-out;
   }
+
+  /* Dark mode spotlight effect */
+  .dark .spotlight {
+    background: radial-gradient(
+      800px circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 255, 255, 0.06),
+      transparent 40%
+    );
+  }
+
+  /* Light mode spotlight effect */
+  .light .spotlight {
+    background: radial-gradient(
+      800px circle at var(--mouse-x) var(--mouse-y),
+      rgba(0, 0, 0, 0.06),
+      transparent 40%
+    );
+  }
+
+  /* Dark gradient background */
+  .dark .gradient-dark {
+    background: linear-gradient(to bottom, #13151a, #090909);
+  }
+
+  /* Tilt animation */
+  .tilt-card {
+    transition: transform 0.3s ease;
+  }
+  
+  .tilt-card:hover {
+    transform: perspective(1000px) rotateX(5deg) rotateY(5deg);
+  }
+
+  /* Text reveal animation */
+  .text-reveal {
+    opacity: 0;
+    animation: revealText 0.5s forwards;
+  }
+
+  @keyframes revealText {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 @layer utilities {

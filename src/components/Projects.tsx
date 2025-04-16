@@ -1,4 +1,7 @@
+import { useEffect, useRef } from "react";
 import { ProjectCard } from "./ProjectCard";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const projects = [
   {
@@ -63,9 +66,29 @@ const projects = [
 ];
 
 export function Projects() {
+  const containerRef = useRef(null);
+  const scrollerRef = useRef(null);
+
+  useEffect(() => {
+    const scrollTween = gsap.to(scrollerRef.current, {
+      x: "-66.666%",
+      ease: "none",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        pin: true,
+        scrub: 1,
+        end: "+=3000",
+      },
+    });
+
+    return () => {
+      scrollTween.kill();
+    };
+  }, []);
+
   return (
-    <section id="projects" className="section bg-muted/30">
-      <div className="container">
+    <section id="projects" className="section bg-muted/30 overflow-hidden">
+      <div className="container mb-12">
         <div className="mb-12 md:mb-16 text-center">
           <h2 className="text-2xl md:text-4xl font-display font-bold mb-4">
             Featured Projects
@@ -75,16 +98,20 @@ export function Projects() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="animate-fade-in"
-              style={{ animationDelay: `${project.id * 0.1}s` }}
-            >
-              <ProjectCard {...project} />
-            </div>
-          ))}
+        <div ref={containerRef} className="relative h-[80vh]">
+          <div
+            ref={scrollerRef}
+            className="flex gap-6 absolute top-0 left-0 w-[300%]"
+          >
+            {Array(3).fill(projects).flat().map((project, index) => (
+              <div
+                key={`${project.id}-${index}`}
+                className="w-[calc(100%/9-1.5rem)] flex-shrink-0"
+              >
+                <ProjectCard {...project} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

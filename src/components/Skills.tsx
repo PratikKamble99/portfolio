@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 import { Card, CardContent } from "./ui/card";
 import gsap from "gsap";
@@ -52,8 +51,29 @@ export function Skills() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const rotateX = (y - rect.height / 2) / 10;
+    const rotateY = (rect.width / 2 - x) / 10;
+
+    gsap.to(card, {
+      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+      duration: 0.3,
+    });
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    gsap.to(e.currentTarget, {
+      transform: "perspective(1000px) rotateX(0) rotateY(0)",
+      duration: 0.3,
+    });
+  };
+
   useEffect(() => {
-    // Animation for title and description
     gsap.fromTo(
       titleRef.current,
       { y: 50, opacity: 0 },
@@ -83,17 +103,14 @@ export function Skills() {
       }
     );
 
-    // Clone the skills for infinite scrolling effect
     if (scrollerInnerRef.current && scrollerRef.current) {
       const scrollerContent = Array.from(scrollerInnerRef.current.children);
       
-      // Clone the skill items to ensure smooth infinite scroll
       scrollerContent.forEach(item => {
         const duplicatedItem = item.cloneNode(true);
         scrollerInnerRef.current?.appendChild(duplicatedItem);
       });
       
-      // Auto-scroll animation
       gsap.to(scrollerInnerRef.current, {
         x: `-50%`,
         ease: "linear",
@@ -101,10 +118,21 @@ export function Skills() {
         repeat: -1,
       });
     }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
-  
+
   return (
-    <section id="skills" className="section bg-background overflow-hidden">
+    <section id="skills" className="section bg-background overflow-hidden spotlight gradient-dark">
       <div className="container mb-12">
         <div className="text-center mb-16">
           <h2 ref={titleRef} className="text-2xl md:text-4xl font-display font-bold mb-4">Skills & Technologies</h2>
@@ -119,7 +147,12 @@ export function Skills() {
             className="flex gap-6 whitespace-nowrap"
           >
             {skills.map((skill, index) => (
-              <Card key={`${skill.name}-${index}`} className="group hover:border-primary/50 transition-colors shrink-0">
+              <Card
+                key={`${skill.name}-${index}`}
+                className="group hover:border-primary/50 transition-colors shrink-0 tilt-card"
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+              >
                 <CardContent className="p-6 flex flex-col items-center gap-4">
                   <div className="w-16 h-16 flex items-center justify-center">
                     <img
@@ -137,7 +170,6 @@ export function Skills() {
             ))}
           </div>
           
-          {/* Gradient overlays for better visual effect */}
           <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-background to-transparent z-10"></div>
           <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10"></div>
         </div>

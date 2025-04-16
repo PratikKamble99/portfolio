@@ -3,36 +3,50 @@ import { ArrowDownCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export const HeroContent = () => {
   const headingRef = useRef(null);
+  const introRef = useRef(null);
   const subheadingRef = useRef(null);
-  const introRef = useRef(null); // Added for the intro paragraph
 
   useEffect(() => {
-    gsap.from(headingRef.current, {
+    // Text split and animation
+    const headingText = new SplitText(headingRef.current, { type: "chars, words" });
+    const introText = new SplitText(introRef.current, { type: "chars" });
+    const subText = new SplitText(subheadingRef.current, { type: "words" });
+
+    gsap.from(headingText.chars, {
+      opacity: 0,
       y: 50,
-      opacity: 0,
-      duration: 1,
-      ease: "power3.out",
-      delay: 0.2,
+      duration: 0.8,
+      stagger: 0.03,
+      ease: "back.out",
     });
 
-    gsap.from(introRef.current, {
-      y: 30,
+    gsap.from(introText.chars, {
       opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      delay: 0.4,
+      y: 20,
+      duration: 0.4,
+      stagger: 0.02,
+      delay: 0.8,
     });
 
-    gsap.from(subheadingRef.current, {
-      y: 30,
+    gsap.from(subText.words, {
       opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      delay: 0.6,
+      y: 20,
+      duration: 0.5,
+      stagger: 0.05,
+      delay: 1.2,
     });
+
+    return () => {
+      headingText.revert();
+      introText.revert();
+      subText.revert();
+    };
   }, []);
 
   return (
