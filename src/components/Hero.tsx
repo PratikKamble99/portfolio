@@ -1,11 +1,50 @@
+
 import { useEffect, useRef } from "react";
 import { ArrowDownCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "gsap/SplitText";
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+gsap.registerPlugin(ScrollTrigger);
+
+// Simple helper to split text into spans
+const splitText = (element: HTMLElement | null, type: 'chars' | 'words') => {
+  if (!element) return { chars: [], words: [], revert: () => {} };
+  
+  const originalHTML = element.innerHTML;
+  const text = element.innerText;
+  let result: HTMLSpanElement[] = [];
+  
+  if (type === 'chars') {
+    element.innerHTML = '';
+    for (let i = 0; i < text.length; i++) {
+      const span = document.createElement('span');
+      span.style.display = 'inline-block';
+      span.innerHTML = text[i] === ' ' ? '&nbsp;' : text[i];
+      element.appendChild(span);
+      result.push(span);
+    }
+  } else if (type === 'words') {
+    element.innerHTML = '';
+    const words = text.split(' ');
+    for (let i = 0; i < words.length; i++) {
+      const span = document.createElement('span');
+      span.style.display = 'inline-block';
+      span.innerText = words[i];
+      element.appendChild(span);
+      if (i < words.length - 1) {
+        element.appendChild(document.createTextNode(' '));
+      }
+      result.push(span);
+    }
+  }
+  
+  return { 
+    chars: type === 'chars' ? result : [],
+    words: type === 'words' ? result : [],
+    revert: () => { element.innerHTML = originalHTML; }
+  };
+};
 
 export const HeroContent = () => {
   const headingRef = useRef(null);
@@ -13,10 +52,10 @@ export const HeroContent = () => {
   const subheadingRef = useRef(null);
 
   useEffect(() => {
-    // Text split and animation
-    const headingText = new SplitText(headingRef.current, { type: "chars, words" });
-    const introText = new SplitText(introRef.current, { type: "chars" });
-    const subText = new SplitText(subheadingRef.current, { type: "words" });
+    // Text split and animation using our custom function
+    const headingText = splitText(headingRef.current, 'chars');
+    const introText = splitText(introRef.current, 'chars');
+    const subText = splitText(subheadingRef.current, 'words');
 
     gsap.from(headingText.chars, {
       opacity: 0,
