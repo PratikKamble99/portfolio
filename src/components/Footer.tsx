@@ -15,7 +15,7 @@ export function Footer() {
           </div>
 
           <div className="flex gap-6">
-            <a
+            {/* <a
               href="#"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
@@ -28,16 +28,16 @@ export function Footer() {
             >
               <Instagram className="h-5 w-5" />
               <span className="sr-only">Instagram</span>
-            </a>
+            </a> */}
             <a
-              href="#"
+              href="https://github.com/PratikKamble99/"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               <Github className="h-5 w-5" />
               <span className="sr-only">GitHub</span>
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/pratikpkamble"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               <Linkedin className="h-5 w-5" />

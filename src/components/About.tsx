@@ -9,12 +9,12 @@ const skills = [
     description:
       "Building interactive and responsive websites with modern frameworks.",
   },
-  {
-    icon: <Layout className="h-6 w-6" />,
-    title: "UI/UX Design",
-    description:
-      "Creating intuitive, user-friendly interfaces that engage and delight.",
-  },
+  // {
+  //   icon: <Layout className="h-6 w-6" />,
+  //   title: "UI/UX Design",
+  //   description:
+  //     "Creating intuitive, user-friendly interfaces that engage and delight.",
+  // },
   {
     icon: <Lightbulb className="h-6 w-6" />,
     title: "Problem Solving",
@@ -73,7 +73,7 @@ export function About() {
             My Expertise
           </h3>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {skills.map((skill, index) => (
               <Card
                 key={index}

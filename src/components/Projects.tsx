@@ -19,6 +19,7 @@ const projects = [
     videoURL:
       "https://cadishealth.com/wp-content/uploads/2024/04/CADIS-Video-Final-1.mp4",
     link: "#",
+    linkDisabled: true,
   },
   {
     id: 2,
@@ -32,7 +33,8 @@ const projects = [
     ],
     imageSrc: "./imageAi.png",
     videoURL: null,
-    link: "https://github.com/",
+    link: "https://github.com/PratikKamble99/image-ai",
+    linkDisabled: false,
   },
   {
     id: 3,
@@ -47,7 +49,8 @@ const projects = [
     ],
     imageSrc: "./expenseTracker.png",
     videoURL: null,
-    link: "https://github.com/",
+    link: "https://github.com/PratikKamble99/expense-tracker-graphql-react",
+    linkDisabled: false,
   },
   {
     id: 4,
@@ -62,6 +65,7 @@ const projects = [
     imageSrc: "./pontis.png",
     videoURL: null,
     link: "#",
+    linkDisabled: true,
   },
 ];
 
@@ -88,7 +92,10 @@ export function Projects() {
           </p>
         </div>
 
-        <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          ref={containerRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {projects.map((project) => (
             <ProjectCard key={project.id} {...project} />
           ))}
