@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from "react";
 import { ArrowDownCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -89,9 +90,9 @@ export const HeroContent = () => {
     <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
       <h1
         ref={headingRef}
-        className="h-[200px] text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70"
+        className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70"
       >
-        Let’s Innovate
+        Let's Innovate
         <br />
         together
       </h1>
@@ -100,7 +101,7 @@ export const HeroContent = () => {
         ref={introRef}
         className="text-3xl text-muted-foreground mb-8 max-w-2xl font-semibold"
       >
-        👋 I’m a Full-Stack Developer
+        👋 I'm a Full-Stack Developer
       </p>
 
       <p
@@ -121,7 +122,7 @@ export function Hero() {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subheadingRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const laptopRef = useRef<HTMLDivElement>(null);
+  const spotlightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -146,6 +147,28 @@ export function Hero() {
         "-=0.4"
       );
 
+    // Spotlight effect
+    const spotlight = spotlightRef.current;
+    
+    if (spotlight) {
+      const handleMouseMove = (e: MouseEvent) => {
+        const rect = spotlight.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        spotlight.style.setProperty('--mouse-x', `${x}px`);
+        spotlight.style.setProperty('--mouse-y', `${y}px`);
+      };
+      
+      spotlight.addEventListener('mousemove', handleMouseMove);
+      
+      return () => {
+        spotlight.removeEventListener('mousemove', handleMouseMove);
+        tl.kill();
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      };
+    }
+
     return () => {
       tl.kill();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -156,11 +179,18 @@ export function Hero() {
     <section
       id="home"
       ref={heroRef}
-      className="section min-h-screen pt-28 md:pt-36 overflow-hidden bg-gradient-to-b from-background to-background/80"
+      className="section min-h-screen pt-28 md:pt-36 overflow-hidden bg-gradient-to-b from-background to-background/80 relative"
     >
-      <div className="container">
+      <div 
+        ref={spotlightRef}
+        className="spotlight absolute inset-0 z-0"
+      ></div>
+      
+      <div className="container relative z-10">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-          <HeroContent />
+          <div ref={headingRef}>
+            <HeroContent />
+          </div>
 
           <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 mb-16">
             <a href="#projects">
