@@ -48,7 +48,7 @@ export function ProjectCard({
           />
         )}
       </div>
-      <div className="h-64 flex flex-col justify-between">
+      <div className="flex flex-col justify-between">
         <CardHeader>
           <div className="flex gap-2 flex-wrap mb-2">
             {tags.map((tag) => (
@@ -61,13 +61,7 @@ export function ProjectCard({
             ))}
           </div>
           <CardTitle>{title}</CardTitle>
-          <CardDescription>
-            <Tooltip>
-              {description.length > 200
-                ? description.slice(0, 200) + "..."
-                : description}
-            </Tooltip>
-          </CardDescription>
+          <CardDescription>{description}</CardDescription>
         </CardHeader>
         <CardFooter>
           <Button
