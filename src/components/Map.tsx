@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
@@ -15,11 +16,11 @@ L.Icon.Default.mergeOptions({
 });
 
 const Map = () => {
-  const [position, setPosition] = useState([
+  const [position, setPosition] = useState<[number, number]>([
     18.510814267654, 73.77285809427802,
-  ]); // Default: London
+  ]); // Default: Pune location
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   //   useEffect(() => {
   //     if (navigator.geolocation) {
@@ -61,16 +62,16 @@ const Map = () => {
       <div>
         <p>{error}</p>
         <MapContainer
-          center={position}
+          center={position as L.LatLngExpression}
           zoom={13}
           style={{ height: HEIGHT, width: "100%", borderRadius: "0.75rem" }}
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-          <Marker position={position}>
-            <Popup>Default location: London</Popup>
+          <Marker position={position as L.LatLngExpression}>
+            <Popup>Default location: Pune</Popup>
           </Marker>
         </MapContainer>
       </div>
@@ -79,15 +80,15 @@ const Map = () => {
 
   return (
     <MapContainer
-      center={position}
+      center={position as L.LatLngExpression}
       zoom={13}
       style={{ height: HEIGHT, width: "100%", borderRadius: "0.75rem" }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <Marker position={position}>
+      <Marker position={position as L.LatLngExpression}>
         <Popup>You are here!</Popup>
       </Marker>
     </MapContainer>
