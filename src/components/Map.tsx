@@ -15,6 +15,11 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
+// Define proper types for components to avoid TypeScript errors
+type MapContainerWithCenterProps = React.ComponentProps<typeof MapContainer> & {
+  center: [number, number];
+};
+
 // Define the component
 const Map = () => {
   const [position] = useState<[number, number]>([
@@ -64,9 +69,9 @@ const Map = () => {
       <div>
         <p>{error}</p>
         <div style={{ height: HEIGHT, width: "100%", borderRadius: "0.75rem" }}>
-          {/* @ts-ignore - Ignoring TypeScript errors for react-leaflet props */}
+          {/* Using type assertion to fix TypeScript errors */}
           <MapContainer
-            center={position}
+            {...({ center: position } as MapContainerWithCenterProps)}
             zoom={13}
             style={{ height: "100%", width: "100%" }}
           >
@@ -82,9 +87,9 @@ const Map = () => {
 
   return (
     <div style={{ height: HEIGHT, width: "100%", borderRadius: "0.75rem" }}>
-      {/* @ts-ignore - Ignoring TypeScript errors for react-leaflet props */}
+      {/* Using type assertion to fix TypeScript errors */}
       <MapContainer
-        center={position}
+        {...({ center: position } as MapContainerWithCenterProps)}
         zoom={13}
         style={{ height: "100%", width: "100%" }}
       >
