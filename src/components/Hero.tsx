@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 import { ArrowDownCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -52,39 +51,37 @@ export const HeroContent = () => {
   const subheadingRef = useRef(null);
 
   useEffect(() => {
-    // Text split and animation using our custom function
     const headingText = splitText(headingRef.current, 'chars');
     const introText = splitText(introRef.current, 'chars');
     const subText = splitText(subheadingRef.current, 'words');
 
-    gsap.from(headingText.chars, {
+    const tl = gsap.timeline({ defaults: { ease: "back.out(1.7)" } });
+
+    tl.from(headingText.chars, {
+      opacity: 0,
+      y: 100,
+      rotation: 45,
+      duration: 1,
+      stagger: 0.02,
+    })
+    .from(introText.chars, {
       opacity: 0,
       y: 50,
-      duration: 0.8,
-      stagger: 0.03,
-      ease: "back.out",
-    });
-
-    gsap.from(introText.chars, {
-      opacity: 0,
-      y: 20,
-      duration: 0.4,
+      duration: 0.6,
       stagger: 0.02,
-      delay: 0.8,
-    });
-
-    gsap.from(subText.words, {
+    }, "-=0.5")
+    .from(subText.words, {
       opacity: 0,
-      y: 20,
+      y: 30,
       duration: 0.5,
-      stagger: 0.05,
-      delay: 1.2,
-    });
+      stagger: 0.03,
+    }, "-=0.3");
 
     return () => {
       headingText.revert();
       introText.revert();
       subText.revert();
+      tl.kill();
     };
   }, []);
 

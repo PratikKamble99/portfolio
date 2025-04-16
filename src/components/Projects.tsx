@@ -67,22 +67,12 @@ const projects = [
 
 export function Projects() {
   const containerRef = useRef(null);
-  const scrollerRef = useRef(null);
 
   useEffect(() => {
-    const scrollTween = gsap.to(scrollerRef.current, {
-      x: "-66.666%",
-      ease: "none",
-      scrollTrigger: {
-        trigger: containerRef.current,
-        pin: true,
-        scrub: 1,
-        end: "+=3000",
-      },
-    });
+    gsap.registerPlugin(ScrollTrigger);
 
     return () => {
-      scrollTween.kill();
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
@@ -98,20 +88,10 @@ export function Projects() {
           </p>
         </div>
 
-        <div ref={containerRef} className="relative h-[80vh]">
-          <div
-            ref={scrollerRef}
-            className="flex gap-6 absolute top-0 left-0 w-[300%]"
-          >
-            {Array(3).fill(projects).flat().map((project, index) => (
-              <div
-                key={`${project.id}-${index}`}
-                className="w-[calc(100%/9-1.5rem)] flex-shrink-0"
-              >
-                <ProjectCard {...project} />
-              </div>
-            ))}
-          </div>
+        <div ref={containerRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project) => (
+            <ProjectCard key={project.id} {...project} />
+          ))}
         </div>
       </div>
     </section>

@@ -97,11 +97,11 @@
     transition: all 0.5s ease-out;
   }
 
-  /* Dark mode spotlight effect */
+  /* Dark mode spotlight effect - more intense green glow */
   .dark .spotlight {
     background: radial-gradient(
       800px circle at var(--mouse-x) var(--mouse-y),
-      rgba(255, 255, 255, 0.06),
+      rgba(45, 212, 191, 0.15),
       transparent 40%
     );
   }
@@ -110,7 +110,7 @@
   .light .spotlight {
     background: radial-gradient(
       800px circle at var(--mouse-x) var(--mouse-y),
-      rgba(0, 0, 0, 0.06),
+      rgba(45, 212, 191, 0.1),
       transparent 40%
     );
   }
