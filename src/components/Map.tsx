@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, MapContainerProps } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -15,12 +15,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
-// Define custom props to fix TypeScript errors
-interface CustomMapContainerProps extends Omit<MapContainerProps, 'center'> {
-  center: L.LatLngExpression;
-  zoom: number;
-}
-
 const Map = () => {
   const [position, setPosition] = useState<[number, number]>([
     18.510814267654, 73.77285809427802,
@@ -28,6 +22,7 @@ const Map = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Commented geolocation code
   //   useEffect(() => {
   //     if (navigator.geolocation) {
   //       navigator.geolocation.getCurrentPosition(
@@ -67,41 +62,35 @@ const Map = () => {
     return (
       <div>
         <p>{error}</p>
-        <MapContainer
-          center={position}
-          zoom={13}
-          style={{ height: HEIGHT, width: "100%", borderRadius: "0.75rem" }}
-          {...({} as CustomMapContainerProps)}
-        >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            {...({} as any)}
-          />
-          <Marker position={position}>
-            <Popup>Default location: Pune</Popup>
-          </Marker>
-        </MapContainer>
+        <div style={{ height: HEIGHT, width: "100%", borderRadius: "0.75rem" }}>
+          <MapContainer
+            center={position}
+            zoom={13}
+            style={{ height: "100%", width: "100%" }}
+          >
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <Marker position={position}>
+              <Popup>Default location: Pune</Popup>
+            </Marker>
+          </MapContainer>
+        </div>
       </div>
     );
   }
 
   return (
-    <MapContainer
-      center={position}
-      zoom={13}
-      style={{ height: HEIGHT, width: "100%", borderRadius: "0.75rem" }}
-      {...({} as CustomMapContainerProps)}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        {...({} as any)}
-      />
-      <Marker position={position}>
-        <Popup>You are here!</Popup>
-      </Marker>
-    </MapContainer>
+    <div style={{ height: HEIGHT, width: "100%", borderRadius: "0.75rem" }}>
+      <MapContainer
+        center={position}
+        zoom={13}
+        style={{ height: "100%", width: "100%" }}
+      >
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <Marker position={position}>
+          <Popup>You are here!</Popup>
+        </Marker>
+      </MapContainer>
+    </div>
   );
 };
 
