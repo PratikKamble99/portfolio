@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
@@ -25,22 +26,45 @@ export const Logo = () => (
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 10;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrolled]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b backdrop-blur-md bg-background/80">
-      <div className="container flex h-16 items-center justify-between">
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+        scrolled 
+          ? "bg-background/95 backdrop-blur-md shadow-md py-2" 
+          : "bg-transparent py-4"
+      }`}
+    >
+      <div className="container flex items-center justify-between">
         <Logo />
 
-        <nav className="hidden md:flex items-center gap-6">
-          {navItems.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="text-sm font-medium transition-colors hover:text-primary"
-            >
-              {item.name}
-            </a>
-          ))}
+        <nav className="hidden md:flex items-center">
+          <div className={`flex gap-1 px-4 py-2 rounded-full ${scrolled ? "bg-muted/50" : "bg-muted/30 backdrop-blur-md"}`}>
+            {navItems.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                className="text-sm font-medium px-4 py-2 rounded-full transition-colors hover:bg-muted-foreground/10"
+              >
+                {item.name}
+              </a>
+            ))}
+          </div>
         </nav>
 
         <div className="flex items-center gap-4">

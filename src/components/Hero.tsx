@@ -54,19 +54,19 @@ export const HeroContent = () => {
   const subheadingRef = useRef(null);
 
   useEffect(() => {
-    // const headingText = splitText(headingRef.current, "words");
+    const headingText = splitText(headingRef.current, "words");
     const introText = splitText(introRef.current, "chars");
     const subText = splitText(subheadingRef.current, "words");
 
     const tl = gsap.timeline({ defaults: { ease: "back.out(1.7)" } });
 
-    tl /* .from(headingText.chars, {
+    tl.from(headingText.words, {
       opacity: 0,
       y: 100,
-      rotation: 45,
+      rotation: 5,
       duration: 1,
-      stagger: 0.02,
-    }) */.from(
+      stagger: 0.1,
+    }).from(
       introText.chars,
       {
         opacity: 0,
@@ -88,7 +88,7 @@ export const HeroContent = () => {
       );
 
     return () => {
-      // headingText.revert();
+      headingText.revert();
       introText.revert();
       subText.revert();
       tl.kill();
@@ -99,7 +99,7 @@ export const HeroContent = () => {
     <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
       <h1
         ref={headingRef}
-        className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70"
+        className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.2] mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70"
       >
         Let's Innovate
         <br />
@@ -203,7 +203,7 @@ export function Hero() {
     <section
       id="home"
       ref={heroRef}
-      className="section min-h-screen pt-28 md:pt-36 overflow-hidden bg-gradient-to-b from-background to-background/80 relative"
+      className="section min-h-[90vh] pt-28 md:pt-24 pb-16 overflow-hidden bg-gradient-to-b from-background to-background/80 relative"
     >
       <div ref={spotlightRef} className="absolute inset-0 z-0 spotlight pointer-events-none"></div>
 
@@ -234,3 +234,4 @@ export function Hero() {
     </section>
   );
 }
+
