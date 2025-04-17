@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from "react";
 import { ArrowDownCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -98,7 +99,7 @@ export const HeroContent = () => {
     <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
       <h1
         ref={headingRef}
-        className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight mb-6 bg-clip-text  bg-gradient-to-r from-primary to-primary/70"
+        className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70"
       >
         Let's Innovate
         <br />
@@ -135,6 +136,7 @@ export function Hero() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Main animation timeline
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     tl.fromTo(
@@ -155,17 +157,31 @@ export function Hero() {
         "-=0.4"
       );
 
-    // Spotlight effect
+    // Improved spotlight effect with throttling for smoother movement
     const spotlight = spotlightRef.current;
+    let isThrottled = false;
+    const throttleTime = 10; // milliseconds between updates
 
     if (spotlight) {
       const handleMouseMove = (e: MouseEvent) => {
-        const rect = spotlight.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        if (isThrottled) return;
+        
+        isThrottled = true;
+        
+        // Use requestAnimationFrame for smoother updates
+        requestAnimationFrame(() => {
+          const rect = spotlight.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
 
-        spotlight.style.setProperty("--mouse-x", `${x}px`);
-        spotlight.style.setProperty("--mouse-y", `${y}px`);
+          spotlight.style.setProperty("--mouse-x", `${x}px`);
+          spotlight.style.setProperty("--mouse-y", `${y}px`);
+          
+          // Release throttle after delay
+          setTimeout(() => {
+            isThrottled = false;
+          }, throttleTime);
+        });
       };
 
       spotlight.addEventListener("mousemove", handleMouseMove);
@@ -189,9 +205,9 @@ export function Hero() {
       ref={heroRef}
       className="section min-h-screen pt-28 md:pt-36 overflow-hidden bg-gradient-to-b from-background to-background/80 relative"
     >
-      <div ref={spotlightRef} className="spotlight absolute inset-0 z-0"></div>
+      <div ref={spotlightRef} className="absolute inset-0 z-0 spotlight pointer-events-none"></div>
 
-      <div className="container relative z-10">
+      <div className="container relative z-10 pointer-events-auto">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           <div ref={headingRef}>
             <HeroContent />

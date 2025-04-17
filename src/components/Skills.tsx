@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from "react";
 import { Card, CardContent } from "./ui/card";
 import gsap from "gsap";
@@ -5,42 +6,42 @@ import gsap from "gsap";
 const skills = [
   {
     name: "React",
-    image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg",
+    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
     level: "Advanced",
   },
   {
     name: "Node.js",
-    image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg",
+    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
     level: "Intermediate",
   },
   {
     name: "TypeScript",
-    image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg",
+    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
     level: "Advanced",
   },
   {
     name: "Next.js",
-    image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original.svg",
+    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
     level: "Intermediate",
   },
   {
     name: "GraphQL",
-    image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/graphql/graphql-plain.svg",
+    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg",
     level: "Intermediate",
   },
   {
     name: "TailwindCSS",
-    image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-plain.svg",
+    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg",
     level: "Advanced",
   },
   {
     name: "MongoDB",
-    image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg",
+    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
     level: "Intermediate",
   },
   {
     name: "PostgreSQL",
-    image: "https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg",
+    image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
     level: "Intermediate",
   },
 ];
@@ -159,6 +160,13 @@ export function Skills() {
                       src={skill.image}
                       alt={skill.name}
                       className="w-12 h-12 group-hover:scale-110 transition-transform"
+                      loading="lazy"
+                      onError={(e) => {
+                        // Fallback if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null;
+                        target.src = `https://ui-avatars.com/api/?name=${skill.name}&background=random`;
+                      }}
                     />
                   </div>
                   <div className="text-center whitespace-normal">

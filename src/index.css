@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap');
 
 @tailwind base;
@@ -97,22 +98,28 @@
     transition: all 0.5s ease-out;
   }
 
-  /* Dark mode spotlight effect - more intense green glow */
+  /* Enhanced spotlight effect for dark mode - higher brightness and larger radius */
   .dark .spotlight {
     background: radial-gradient(
-      800px circle at var(--mouse-x) var(--mouse-y),
+      1200px circle at var(--mouse-x) var(--mouse-y),
+      rgba(45, 212, 191, 0.25),
+      transparent 40%
+    );
+    will-change: background;
+    transition: background-position 0.05s ease;
+    pointer-events: none;
+  }
+
+  /* Enhanced spotlight effect for light mode */
+  .spotlight {
+    background: radial-gradient(
+      1200px circle at var(--mouse-x) var(--mouse-y),
       rgba(45, 212, 191, 0.15),
       transparent 40%
     );
-  }
-
-  /* Light mode spotlight effect */
-  .light .spotlight {
-    background: radial-gradient(
-      800px circle at var(--mouse-x) var(--mouse-y),
-      rgba(45, 212, 191, 0.1),
-      transparent 40%
-    );
+    will-change: background;
+    transition: background-position 0.05s ease;
+    pointer-events: none;
   }
 
   /* Dark gradient background */
@@ -123,6 +130,7 @@
   /* Tilt animation */
   .tilt-card {
     transition: transform 0.3s ease;
+    will-change: transform;
   }
   
   .tilt-card:hover {
@@ -155,6 +163,7 @@
   .transform-gpu {
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
+    will-change: transform;
   }
   
   /* Terminal cursor blinking animation */

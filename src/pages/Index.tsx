@@ -16,18 +16,49 @@ const Index = () => {
     // Register GSAP plugins
     gsap.registerPlugin(ScrollTrigger);
 
-    // Add smooth scrolling to all sections
+    // Add smooth scrolling to all sections with improved performance
     const sections = document.querySelectorAll("section");
-    sections.forEach((section) => {
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top 80%",
-        toggleClass: { targets: section, className: "active" },
+    
+    // Create a single scroll listener for better performance
+    const checkScroll = () => {
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const isVisible = 
+          rect.top < window.innerHeight * 0.8 && 
+          rect.bottom > 0;
+          
+        if (isVisible && !section.classList.contains("active")) {
+          section.classList.add("active");
+        }
       });
+    };
+    
+    // Initial check
+    checkScroll();
+    
+    // Optimize scroll listener with requestAnimationFrame
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          checkScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
     });
 
+    // Set up global mouse tracking for spotlight effects
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    };
+    
+    window.addEventListener('mousemove', handleGlobalMouseMove);
+
     return () => {
-      // Clean up ScrollTrigger instances
+      // Clean up
+      window.removeEventListener('mousemove', handleGlobalMouseMove);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
