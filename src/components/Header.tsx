@@ -85,7 +85,7 @@ export function Header() {
         scrolled 
           ? "backdrop-blur-md shadow-md py-2" 
           : "py-4"
-      } relative`}
+      }`}
     >
       <div 
         ref={spotlightRef} 

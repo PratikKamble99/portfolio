@@ -1,4 +1,5 @@
-import { Code, Layout, Lightbulb, Sparkles } from "lucide-react";
+
+import { Code, Layout, Lightbulb, Sparkles, DownloadCloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -61,8 +62,14 @@ export function About() {
                 href="https://drive.google.com/file/d/1jVJS4dBQF5klTiBeiJzJqGy0hK1op3SQ/view?usp=drive_link"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="inline-block"
               >
-                <Button size="lg">Download Resume</Button>
+                <Button size="lg" className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg">
+                  <span className="relative z-10 flex items-center gap-2">
+                    Download Resume <DownloadCloud className="h-5 w-5 transition-transform group-hover:translate-y-1" />
+                  </span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                </Button>
               </a>
             </div>
           </div>

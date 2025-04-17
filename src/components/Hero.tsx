@@ -99,11 +99,9 @@ export const HeroContent = () => {
     <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
       <h1
         ref={headingRef}
-        className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-[1.2] mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70"
+        className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70"
       >
-        Let's Innovate
-        <br />
-        together
+        Let's Innovate together
       </h1>
 
       <p
@@ -203,7 +201,7 @@ export function Hero() {
     <section
       id="home"
       ref={heroRef}
-      className="section min-h-[90vh] pt-28 md:pt-24 pb-16 overflow-hidden bg-gradient-to-b from-background to-background/80 relative"
+      className="section min-h-[calc(100vh-80px)] pt-16 md:pt-16 pb-16 overflow-hidden bg-gradient-to-b from-background to-background/80 relative"
     >
       <div ref={spotlightRef} className="absolute inset-0 z-0 spotlight pointer-events-none"></div>
 
@@ -234,4 +232,3 @@ export function Hero() {
     </section>
   );
 }
-
