@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 import { ArrowDownCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -66,16 +65,17 @@ export const HeroContent = () => {
       rotation: 5,
       duration: 1,
       stagger: 0.1,
-    }).from(
-      introText.chars,
-      {
-        opacity: 0,
-        y: 50,
-        duration: 0.6,
-        stagger: 0.02,
-      },
-      "-=0.5"
-    )
+    })
+      .from(
+        introText.chars,
+        {
+          opacity: 0,
+          y: 50,
+          duration: 0.6,
+          stagger: 0.02,
+        },
+        "-=0.5"
+      )
       .from(
         subText.words,
         {
@@ -99,7 +99,7 @@ export const HeroContent = () => {
     <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
       <h1
         ref={headingRef}
-        className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight mb-8 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70"
+        className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight mb-8 bg-clip-text bg-gradient-to-r from-primary to-primary/70"
       >
         Let's Innovate together
       </h1>
@@ -163,9 +163,9 @@ export function Hero() {
     if (spotlight) {
       const handleMouseMove = (e: MouseEvent) => {
         if (isThrottled) return;
-        
+
         isThrottled = true;
-        
+
         // Use requestAnimationFrame for smoother updates
         requestAnimationFrame(() => {
           const rect = spotlight.getBoundingClientRect();
@@ -174,7 +174,7 @@ export function Hero() {
 
           spotlight.style.setProperty("--mouse-x", `${x}px`);
           spotlight.style.setProperty("--mouse-y", `${y}px`);
-          
+
           // Release throttle after delay
           setTimeout(() => {
             isThrottled = false;
@@ -201,9 +201,12 @@ export function Hero() {
     <section
       id="home"
       ref={heroRef}
-      className="section min-h-[calc(100vh-80px)] pt-16 md:pt-16 pb-16 overflow-hidden bg-gradient-to-b from-background to-background/80 relative"
+      className="section min-h-[calc(100vh)] pt-16 md:pt-16 pb-16 overflow-hidden bg-gradient-to-b from-background to-background/80 relative flex items-center justify-center"
     >
-      <div ref={spotlightRef} className="absolute inset-0 z-0 spotlight pointer-events-none"></div>
+      <div
+        ref={spotlightRef}
+        className="absolute inset-0 z-0 spotlight pointer-events-none"
+      ></div>
 
       <div className="container relative z-10 pointer-events-auto">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">

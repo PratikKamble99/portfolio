@@ -1,4 +1,3 @@
-
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Skills } from "@/components/Skills";
@@ -18,24 +17,23 @@ const Index = () => {
 
     // Add smooth scrolling to all sections with improved performance
     const sections = document.querySelectorAll("section");
-    
+
     // Create a single scroll listener for better performance
     const checkScroll = () => {
       sections.forEach((section) => {
         const rect = section.getBoundingClientRect();
-        const isVisible = 
-          rect.top < window.innerHeight * 0.8 && 
-          rect.bottom > 0;
-          
+        const isVisible =
+          rect.top < window.innerHeight * 0.8 && rect.bottom > 0;
+
         if (isVisible && !section.classList.contains("active")) {
           section.classList.add("active");
         }
       });
     };
-    
+
     // Initial check
     checkScroll();
-    
+
     // Optimize scroll listener with requestAnimationFrame
     let ticking = false;
     window.addEventListener("scroll", () => {
@@ -50,15 +48,15 @@ const Index = () => {
 
     // Set up global mouse tracking for spotlight effects
     const handleGlobalMouseMove = (e: MouseEvent) => {
-      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
-      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+      document.documentElement.style.setProperty("--mouse-x", `${e.clientX}px`);
+      document.documentElement.style.setProperty("--mouse-y", `${e.clientY}px`);
     };
-    
-    window.addEventListener('mousemove', handleGlobalMouseMove);
+
+    window.addEventListener("mousemove", handleGlobalMouseMove);
 
     return () => {
       // Clean up
-      window.removeEventListener('mousemove', handleGlobalMouseMove);
+      window.removeEventListener("mousemove", handleGlobalMouseMove);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
@@ -66,7 +64,7 @@ const Index = () => {
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden">
       <Header />
-      <main className="flex-1 pt-16">
+      <main className="flex-1">
         <Hero />
         <Skills />
         <Experience />

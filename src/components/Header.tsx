@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -38,7 +37,7 @@ export function Header() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    
+
     // Add spotlight effect
     const spotlight = spotlightRef.current;
     let isThrottled = false;
@@ -47,9 +46,9 @@ export function Header() {
     if (spotlight) {
       const handleMouseMove = (e: MouseEvent) => {
         if (isThrottled) return;
-        
+
         isThrottled = true;
-        
+
         // Use requestAnimationFrame for smoother updates
         requestAnimationFrame(() => {
           const rect = spotlight.getBoundingClientRect();
@@ -58,7 +57,7 @@ export function Header() {
 
           spotlight.style.setProperty("--mouse-x", `${x}px`);
           spotlight.style.setProperty("--mouse-y", `${y}px`);
-          
+
           // Release throttle after delay
           setTimeout(() => {
             isThrottled = false;
@@ -80,22 +79,20 @@ export function Header() {
   }, [scrolled]);
 
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
-        scrolled 
-          ? "backdrop-blur-md shadow-md py-2" 
-          : "py-4"
+        scrolled ? "backdrop-blur-md shadow-md py-2" : "py-4"
       }`}
     >
-      <div 
-        ref={spotlightRef} 
-        className="absolute inset-0 z-0 spotlight pointer-events-none"
-      ></div>
       <div className="container relative z-10 flex items-center justify-between">
         <Logo />
 
         <nav className="hidden md:flex items-center">
-          <div className={`flex gap-1 px-4 py-2 rounded-full ${scrolled ? "bg-muted/50" : "bg-muted/30 backdrop-blur-md"}`}>
+          <div
+            className={`flex gap-1 px-4 py-2 rounded-full ${
+              scrolled ? "bg-muted/50" : "bg-muted/30 backdrop-blur-md"
+            }`}
+          >
             {navItems.map((item) => (
               <a
                 key={item.name}
