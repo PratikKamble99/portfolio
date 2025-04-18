@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
+import gsap from "gsap";
 
 const navItems = [
   { name: "Home", href: "#" },
@@ -27,6 +28,8 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const spotlightRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const navItemsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,6 +81,52 @@ export function Header() {
     };
   }, [scrolled]);
 
+  useEffect(() => {
+    if (mobileMenuRef.current) {
+      const tl = gsap.timeline({ paused: true });
+      
+      tl.fromTo(mobileMenuRef.current, 
+        {
+          opacity: 0,
+          y: -20,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.3,
+          ease: "power2.out",
+        }
+      );
+
+      // Stagger animate nav items
+      tl.fromTo(navItemsRef.current,
+        {
+          opacity: 0,
+          x: -20,
+        },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.4,
+          stagger: 0.1,
+          ease: "power2.out",
+        },
+        "-=0.2"
+      );
+
+      if (mobileMenuOpen) {
+        tl.play();
+      } else {
+        gsap.to(mobileMenuRef.current, {
+          opacity: 0,
+          y: -20,
+          duration: 0.3,
+          ease: "power2.in",
+        });
+      }
+    }
+  }, [mobileMenuOpen]);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
@@ -125,7 +174,10 @@ export function Header() {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-background">
+        <div 
+          ref={mobileMenuRef}
+          className="fixed inset-0 z-50 bg-background"
+        >
           <div className="container flex h-16 items-center justify-between">
             <Logo />
             <Button
@@ -138,12 +190,13 @@ export function Header() {
             </Button>
           </div>
           <nav className="container grid gap-6 py-8 border-b bg-background">
-            {navItems.map((item) => (
+            {navItems.map((item, index) => (
               <a
                 key={item.name}
                 href={item.href}
                 className="text-lg font-medium hover:text-primary"
                 onClick={() => setMobileMenuOpen(false)}
+                ref={(el) => el && (navItemsRef.current[index] = el)}
               >
                 {item.name}
               </a>
