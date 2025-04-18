@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,118 +6,50 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Map from "./Map";
 import emailjs from "@emailjs/browser";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { contactFormSchema, type ContactFormValues } from "@/schemas/contactSchema";
+import { toast } from "@/components/ui/sonner";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 
 export function Contact() {
-  const formRef = useRef();
-  const [isSent, setIsSent] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    message: "",
-    subject: "",
-  });
-
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    message: "",
-    subject: "",
-  });
-
-  // Validation function
-  const validateForm = (formData) => {
-    const newErrors = {
+  const formRef = useRef<HTMLFormElement>(null);
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
       name: "",
       email: "",
-      message: "",
       subject: "",
-    };
+      message: "",
+    },
+  });
 
-    // Name validation
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
-    } else if (formData.name.trim().length < 2) {
-      newErrors.name = "Name must be at least 2 characters";
-    }
+  const onSubmit = async (data: ContactFormValues) => {
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAIL_JS_SERVICE_KEY,
+        import.meta.env.VITE_EMAIL_JS_TEMPLATE_KEY,
+        {
+          from_name: data.name,
+          to_name: "Pratik Kamble",
+          from_email: data.email,
+          to_email: import.meta.env.VITE_EMAIL_JS_TO_EMAIL,
+          message: data.message,
+        },
+        "DyLtGTRbtEuUC0G_S"
+      );
 
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!emailRegex.test(formData.email.trim())) {
-      newErrors.email = "Please enter a valid email address";
-    }
-
-    // Subject validation
-    if (!formData.subject.trim()) {
-      newErrors.subject = "Subject is required";
-    } else if (formData.subject.trim().length < 3) {
-      newErrors.subject = "Subject must be at least 3 characters";
-    }
-
-    // Message validation
-    if (!formData.message.trim()) {
-      newErrors.message = "Message is required";
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = "Message must be at least 10 characters";
-    }
-
-    return newErrors;
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
-
-    // Validate on change (optional, for real-time feedback)
-    const newErrors = validateForm({
-      ...form,
-      [name]: value,
-    });
-    setErrors(newErrors);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const newErrors = validateForm(form);
-
-    // Check if there are any errors
-    if (Object.values(newErrors).every((error) => error === "")) {
-      setLoading(true);
-      emailjs
-        .send(
-          import.meta.env.VITE_EMAIL_JS_SERVICE_KEY,
-          import.meta.env.VITE_EMAIL_JS_TEMPLATE_KEY,
-          {
-            from_name: form.name,
-            to_name: "Pratik Kamble",
-            from_email: form.email,
-            to_email: import.meta.env.VITE_EMAIL_JS_TO_EMAIL,
-            message: form.message,
-          },
-          "DyLtGTRbtEuUC0G_S"
-        )
-        .then(
-          () => {
-            setLoading(false);
-            alert("Thank you. I will get back to you as soon as possible,");
-            setForm({
-              name: "",
-              email: "",
-              message: "",
-              subject: "",
-            });
-          },
-          (error) => {
-            setLoading(false);
-            console.log(error);
-            alert("something went wrong.");
-          }
-        );
-    } else {
-      setErrors(newErrors);
+      toast.success("Message sent successfully!");
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to send message. Please try again.");
     }
   };
 
@@ -137,65 +69,71 @@ export function Contact() {
         <div className="grid gap-8 lg:grid-cols-2">
           <Card className="h-full">
             <CardContent className="h-full flex flex-col p-6">
-              <form
-                className="space-y-6 flex-1 flex flex-col"
-                ref={formRef}
-                onSubmit={handleSubmit}
-              >
-                <div className="grid gap-6 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <Input
-                      type="text"
+              <Form {...form}>
+                <form
+                  ref={formRef}
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6 flex-1 flex flex-col"
+                >
+                  <div className="grid gap-6 sm:grid-cols-2">
+                    <FormField
+                      control={form.control}
                       name="name"
-                      value={form.name}
-                      onChange={handleChange}
-                      placeholder="What's your name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input placeholder="What's your name" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                    {errors.name && (
-                      <p className="text-red-500 text-sm">{errors.name}</p>
-                    )}
-                  </div>
-                  <div className="space-y-2">
-                    <Input
-                      type="email"
+                    <FormField
+                      control={form.control}
                       name="email"
-                      value={form.email}
-                      onChange={handleChange}
-                      placeholder="What's your email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input placeholder="What's your email" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                    {errors.email && (
-                      <p className="text-red-500 text-sm">{errors.email}</p>
-                    )}
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <Input
-                    placeholder="Subject"
-                    type="text"
+                  <FormField
+                    control={form.control}
                     name="subject"
-                    value={form.subject}
-                    onChange={handleChange}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input placeholder="Subject" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                  {errors.subject && (
-                    <p className="text-red-500 text-sm">{errors.subject}</p>
-                  )}
-                </div>
-                <div className="space-y-2 flex-1">
-                  <Textarea
+                  <FormField
+                    control={form.control}
                     name="message"
-                    value={form.message}
-                    onChange={handleChange}
-                    placeholder="What do want to say"
-                    className="h-full min-h-[150px] resize-none"
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormControl>
+                          <Textarea
+                            placeholder="What do you want to say"
+                            className="h-full min-h-[150px] resize-none"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                  {errors.message && (
-                    <p className="text-red-500 text-sm">{errors.message}</p>
-                  )}
-                </div>
-                <Button type="submit" className="w-full">
-                  {loading ? "sending" : "Send Message"}
-                </Button>
-              </form>
+                  <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+                    {form.formState.isSubmitting ? "Sending..." : "Send Message"}
+                  </Button>
+                </form>
+              </Form>
             </CardContent>
           </Card>
 
