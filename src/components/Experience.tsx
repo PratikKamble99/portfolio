@@ -33,82 +33,73 @@ export function Experience() {
   const experienceRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Register ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger);
 
-    // Create a timeline for the heading and description
+    // Heading and description animation
     gsap.fromTo(
-      headingRef.current,
-      { y: 50, opacity: 0 },
+      [headingRef.current, descriptionRef.current],
+      { 
+        y: 50, 
+        opacity: 0 
+      },
       {
         y: 0,
         opacity: 1,
-        duration: 0.8,
+        duration: 1,
+        stagger: 0.2,
         scrollTrigger: {
-          trigger: headingRef.current,
-          start: "top bottom-=100",
-        },
+          trigger: sectionRef.current,
+          start: "top 80%",
+          end: "top 50%",
+          scrub: 1,
+        }
       }
     );
 
-    gsap.fromTo(
-      descriptionRef.current,
-      { y: 30, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        delay: 0.2,
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: "top bottom-=100",
-        },
-      }
-    );
-
-    // Animate the timeline line as user scrolls
+    // Timeline line animation with coca-cola effect
     gsap.fromTo(
       timelineRef.current,
-      { height: 0 },
+      { height: "0%" },
       {
         height: "100%",
         duration: 1,
-        ease: "power2.inOut",
         scrollTrigger: {
           trigger: timelineRef.current,
-          start: "top 70%",
-          end: "bottom 30%",
-          scrub: 0.6,
-        },
+          start: "top 80%",
+          end: "bottom 20%",
+          scrub: 1,
+        }
       }
     );
 
-    // Animate each experience card
+    // Experience cards animation
     experienceRefs.current.forEach((ref, index) => {
-      const direction = index % 2 === 0 ? 1 : -1;
-
+      const xOffset = index % 2 === 0 ? 100 : -100;
+      
       gsap.fromTo(
         ref,
         {
-          x: 50 * direction,
+          x: xOffset,
           opacity: 0,
+          scale: 0.8,
         },
         {
           x: 0,
           opacity: 1,
-          duration: 0.8,
+          scale: 1,
+          duration: 1,
           scrollTrigger: {
             trigger: ref,
-            start: "top bottom-=100",
-            toggleActions: "play none none none",
-          },
+            start: "top 80%",
+            end: "top 60%",
+            scrub: 1,
+          }
         }
       );
     });
 
     return () => {
-      // Clean up ScrollTrigger instances
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
@@ -155,7 +146,7 @@ export function Experience() {
                 <div
                   className={`flex-1 md:text-${
                     index % 2 === 0 ? "right" : "left"
-                  } ml-4 md:ml-0 `}
+                  } ml-4 md:ml-0`}
                 >
                   <div className="bg-card p-6 rounded-lg border border-border/50 shadow-sm hover:shadow-md hover:border-primary/20 transition-all">
                     <h3 className="text-xl font-semibold mb-2">{exp.role}</h3>
