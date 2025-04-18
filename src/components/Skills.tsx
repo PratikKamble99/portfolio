@@ -63,14 +63,16 @@ export function Skills() {
 
     gsap.to(card, {
       transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-      duration: 0.3,
+      duration: 0.2,
+      ease: "power1.out",
     });
   };
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
     gsap.to(e.currentTarget, {
       transform: "perspective(1000px) rotateX(0) rotateY(0)",
-      duration: 0.3,
+      duration: 0.4,
+      ease: "power2.out",
     });
   };
 
@@ -82,6 +84,7 @@ export function Skills() {
         y: 0, 
         opacity: 1, 
         duration: 0.8,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: titleRef.current,
           start: "top bottom-=100",
@@ -97,6 +100,7 @@ export function Skills() {
         opacity: 1, 
         duration: 0.6,
         delay: 0.2,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: titleRef.current,
           start: "top bottom-=100",
@@ -107,16 +111,34 @@ export function Skills() {
     if (scrollerInnerRef.current && scrollerRef.current) {
       const scrollerContent = Array.from(scrollerInnerRef.current.children);
       
+      // Clone elements for infinite scroll effect
       scrollerContent.forEach(item => {
         const duplicatedItem = item.cloneNode(true);
         scrollerInnerRef.current?.appendChild(duplicatedItem);
       });
       
-      gsap.to(scrollerInnerRef.current, {
+      // Kill any existing animations
+      gsap.killTweensOf(scrollerInnerRef.current);
+      
+      // Create smooth infinite scroll animation
+      const scrollerAnimation = gsap.to(scrollerInnerRef.current, {
         x: `-50%`,
-        ease: "linear",
-        duration: 25,
+        ease: "none",
+        duration: 30,
         repeat: -1,
+        onRepeat: () => {
+          // Reset position for smoother looping
+          gsap.set(scrollerInnerRef.current, { x: "0%" });
+        }
+      });
+
+      // Add pause/resume interaction
+      scrollerRef.current.addEventListener("mouseenter", () => {
+        scrollerAnimation.pause();
+      });
+      
+      scrollerRef.current.addEventListener("mouseleave", () => {
+        scrollerAnimation.resume();
       });
     }
 
@@ -129,6 +151,7 @@ export function Skills() {
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      gsap.killTweensOf(scrollerInnerRef.current);
     };
   }, []);
 
