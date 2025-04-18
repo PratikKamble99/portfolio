@@ -1,7 +1,9 @@
-
 import { Code, Layout, Lightbulb, Sparkles, DownloadCloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const skills = [
   {
@@ -10,12 +12,6 @@ const skills = [
     description:
       "Building interactive and responsive websites with modern frameworks.",
   },
-  // {
-  //   icon: <Layout className="h-6 w-6" />,
-  //   title: "UI/UX Design",
-  //   description:
-  //     "Creating intuitive, user-friendly interfaces that engage and delight.",
-  // },
   {
     icon: <Lightbulb className="h-6 w-6" />,
     title: "Problem Solving",
@@ -29,6 +25,37 @@ const skills = [
 ];
 
 export function About() {
+  const skillsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (skillsRef.current) {
+      const cards = skillsRef.current.querySelectorAll('.skill-card');
+      
+      cards.forEach((card, index) => {
+        gsap.fromTo(
+          card,
+          { 
+            opacity: 0,
+            y: 50
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            delay: index * 0.2,
+            scrollTrigger: {
+              trigger: card,
+              start: "top bottom-=100",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+      });
+    }
+  }, []);
+
   return (
     <section id="about" className="section">
       <div className="container">
@@ -80,15 +107,14 @@ export function About() {
             My Expertise
           </h3>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div ref={skillsRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {skills.map((skill, index) => (
               <Card
                 key={index}
-                className="animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className="skill-card hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
               >
                 <CardHeader className="pb-2">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 transform transition-transform duration-300 hover:scale-110">
                     {skill.icon}
                   </div>
                   <CardTitle className="text-lg">{skill.title}</CardTitle>

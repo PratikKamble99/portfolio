@@ -121,7 +121,7 @@ export function Contact() {
                         <FormControl>
                           <Textarea
                             placeholder="What do you want to say"
-                            className="h-full min-h-[150px] resize-none"
+                            className="min-h-[150px] resize-none"
                             {...field}
                           />
                         </FormControl>
