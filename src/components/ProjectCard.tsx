@@ -1,3 +1,4 @@
+
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tooltip } from "./ui/tooltip";
 
 interface ProjectCardProps {
   title: string;
@@ -30,21 +30,20 @@ export function ProjectCard({
   linkDisabled,
 }: ProjectCardProps) {
   return (
-    <Card className="overflow-hidden card-hover h-full">
+    <Card className="overflow-hidden card-hover h-full border border-border bg-background">
       <div className="aspect-video overflow-hidden bg-muted">
         {videoURL ? (
           <video
             src={videoURL}
             autoPlay={true}
             muted={true}
-            // controls
-            className="w-full h-full object-cover rounded-2xl"
+            className="w-full h-full object-cover rounded-t-lg"
           />
         ) : (
           <img
             src={imageSrc}
             alt={title}
-            className="w-full h-full object-cover rounded-2xl"
+            className="w-full h-full object-cover rounded-t-lg"
           />
         )}
       </div>
@@ -54,22 +53,23 @@ export function ProjectCard({
             {tags.map((tag) => (
               <span
                 key={tag.name}
-                className={`px-2 py-1 bg-secondary ${tag.color} text-xs rounded-full`}
+                className="px-2 py-1 text-xs rounded-full bg-secondary text-secondary-foreground"
               >
                 {tag.name}
               </span>
             ))}
           </div>
-          <CardTitle>{title}</CardTitle>
-          <CardDescription>{description}</CardDescription>
+          <CardTitle className="font-medium">{title}</CardTitle>
+          <CardDescription className="text-muted-foreground">{description}</CardDescription>
         </CardHeader>
         <CardFooter>
           <Button
-            variant="outline"
+            variant="showcasy"
+            size="showcasy"
             className={`gap-2 ${
-              linkDisabled ? "cursor-not-allowed" : "cursor-pointer"
+              linkDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
             }`}
-            asChild
+            asChild={!linkDisabled}
           >
             {linkDisabled ? (
               <span aria-disabled="true">

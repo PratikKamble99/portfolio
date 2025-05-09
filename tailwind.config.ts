@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -53,7 +52,13 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Adding purple theme colors
+				showcasy: {
+					DEFAULT: '#000000',
+					muted: '#7D7D7D',
+					light: '#CCCCCC',
+					lighter: '#F5F5F5'
+				},
+				// Keep purple colors for backward compatibility
 				purple: {
 					50: '#f5f3ff',
 					100: '#ede9fe',
@@ -98,7 +103,7 @@ export default {
 			},
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
-				display: ['Montserrat', 'sans-serif']
+				display: ['Inter', 'sans-serif']
 			}
 		}
 	},
