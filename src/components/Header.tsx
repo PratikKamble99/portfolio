@@ -29,7 +29,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const spotlightRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const navItemsRef = useRef<HTMLDivElement[]>([]);
+  const navItemsRef = useRef<HTMLAnchorElement[]>([]);
 
   useEffect(() => {
     const handleScroll = () => {
