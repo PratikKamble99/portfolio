@@ -1,5 +1,6 @@
+
 import { useEffect, useRef } from "react";
-import { ArrowDownCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -48,77 +49,86 @@ const splitText = (element: HTMLElement | null, type: "chars" | "words") => {
 };
 
 export const HeroContent = () => {
+  const greetingRef = useRef(null);
   const headingRef = useRef(null);
-  const introRef = useRef(null);
+  const headingEmphasisRef = useRef(null);
   const subheadingRef = useRef(null);
 
   useEffect(() => {
+    const greetingText = splitText(greetingRef.current, "chars");
     const headingText = splitText(headingRef.current, "words");
-    const introText = splitText(introRef.current, "chars");
+    const headingEmphasisText = splitText(headingEmphasisRef.current, "words");
     const subText = splitText(subheadingRef.current, "words");
 
     const tl = gsap.timeline({ defaults: { ease: "back.out(1.7)" } });
 
-    tl.from(headingText.words, {
+    tl.from(greetingText.chars, {
       opacity: 0,
-      y: 100,
-      rotation: 5,
-      duration: 1,
-      stagger: 0.1,
+      y: 20,
+      duration: 0.6,
+      stagger: 0.02,
     })
-      .from(
-        introText.chars,
-        {
-          opacity: 0,
-          y: 50,
-          duration: 0.6,
-          stagger: 0.02,
-        },
-        "-=0.5"
-      )
-      .from(
-        subText.words,
-        {
-          opacity: 0,
-          y: 30,
-          duration: 0.5,
-          stagger: 0.03,
-        },
-        "-=0.3"
-      );
+    .from(headingText.words, {
+      opacity: 0,
+      y: 50,
+      duration: 0.8,
+      stagger: 0.08,
+    }, "-=0.3")
+    .from(headingEmphasisText.words, {
+      opacity: 0,
+      y: 50,
+      duration: 0.8,
+      stagger: 0.08,
+    }, "-=0.5")
+    .from(
+      subText.words,
+      {
+        opacity: 0,
+        y: 30,
+        duration: 0.5,
+        stagger: 0.03,
+      },
+      "-=0.3"
+    );
 
     return () => {
+      greetingText.revert();
       headingText.revert();
-      introText.revert();
+      headingEmphasisText.revert();
       subText.revert();
       tl.kill();
     };
   }, []);
 
   return (
-    <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-      <h1
-        ref={headingRef}
-        className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight mb-8 bg-clip-text bg-gradient-to-r from-primary to-primary/70"
+    <div className="flex flex-col items-start text-left max-w-4xl">
+      <h3
+        ref={greetingRef}
+        className="text-xl font-medium mb-4"
       >
-        Let's Innovate together
-      </h1>
+        Hello! I'm Pratik.
+      </h3>
 
-      <p
-        ref={introRef}
-        className="text-3xl text-muted-foreground mb-8 max-w-2xl font-semibold"
-      >
-        I'm a Full-Stack Developer
-      </p>
+      <div className="mb-6">
+        <h1
+          ref={headingRef}
+          className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight"
+        >
+          Designing digital product with emphasis
+        </h1>
+        <h1
+          ref={headingEmphasisRef}
+          className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight text-muted-foreground/70"
+        >
+          on visual design
+        </h1>
+      </div>
 
       <p
         ref={subheadingRef}
         className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl"
       >
-        I engineer robust, scalable, and high-performance web applications from
-        frontend to backend. I specialize in crafting modern UIs, building
-        secure APIs, and optimizing database-driven systems for real-world
-        impact.
+        A multidisciplinary developer harnessing the power of design to achieve online goals.
       </p>
     </div>
   );
@@ -126,8 +136,7 @@ export const HeroContent = () => {
 
 export function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const subheadingRef = useRef<HTMLParagraphElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const spotlightRef = useRef<HTMLDivElement>(null);
 
@@ -138,22 +147,16 @@ export function Hero() {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     tl.fromTo(
-      headingRef.current,
+      contentRef.current,
       { y: 50, opacity: 0 },
       { y: 0, opacity: 1, duration: 1 }
     )
-      .fromTo(
-        subheadingRef.current,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8 },
-        "-=0.6"
-      )
-      .fromTo(
-        ctaRef.current,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6 },
-        "-=0.4"
-      );
+    .fromTo(
+      ctaRef.current,
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6 },
+      "-=0.4"
+    );
 
     // Improved spotlight effect with throttling for smoother movement
     const spotlight = spotlightRef.current;
@@ -201,7 +204,7 @@ export function Hero() {
     <section
       id="home"
       ref={heroRef}
-      className="section min-h-[calc(100vh)] pt-16 md:pt-16 pb-16 overflow-hidden bg-gradient-to-b from-background to-background/80 relative flex items-center justify-center"
+      className="section min-h-[calc(100vh)] pt-16 md:pt-16 pb-16 overflow-hidden bg-gradient-to-b from-background to-background/80 relative flex items-center"
     >
       <div
         ref={spotlightRef}
@@ -209,24 +212,15 @@ export function Hero() {
       ></div>
 
       <div className="container relative z-10 pointer-events-auto">
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-          <div ref={headingRef}>
+        <div className="flex flex-col items-start max-w-5xl">
+          <div ref={contentRef}>
             <HeroContent />
           </div>
 
-          <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 mb-16">
-            <a href="#projects">
-              <Button size="lg" className="gap-2 text-base px-8 py-6">
-                View Projects <ArrowDownCircle className="h-4 w-4" />
-              </Button>
-            </a>
+          <div ref={ctaRef} className="mt-8">
             <a href="#contact">
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-base px-8 py-6"
-              >
-                Contact Me
+              <Button size="lg" className="gap-2 text-base px-8 py-6">
+                Let's Talk <ArrowRight className="h-4 w-4" />
               </Button>
             </a>
           </div>
