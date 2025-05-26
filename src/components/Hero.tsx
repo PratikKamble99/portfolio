@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -68,28 +67,36 @@ export const HeroContent = () => {
       duration: 0.6,
       stagger: 0.02,
     })
-    .from(headingText.words, {
-      opacity: 0,
-      y: 50,
-      duration: 0.8,
-      stagger: 0.08,
-    }, "-=0.3")
-    .from(headingEmphasisText.words, {
-      opacity: 0,
-      y: 50,
-      duration: 0.8,
-      stagger: 0.08,
-    }, "-=0.5")
-    .from(
-      subText.words,
-      {
-        opacity: 0,
-        y: 30,
-        duration: 0.5,
-        stagger: 0.03,
-      },
-      "-=0.3"
-    );
+      .from(
+        headingText.words,
+        {
+          opacity: 0,
+          y: 50,
+          duration: 0.8,
+          stagger: 0.08,
+        },
+        "-=0.3"
+      )
+      .from(
+        headingEmphasisText.words,
+        {
+          opacity: 0,
+          y: 50,
+          duration: 0.8,
+          stagger: 0.08,
+        },
+        "-=0.5"
+      )
+      .from(
+        subText.words,
+        {
+          opacity: 0,
+          y: 30,
+          duration: 0.5,
+          stagger: 0.03,
+        },
+        "-=0.3"
+      );
 
     return () => {
       greetingText.revert();
@@ -101,11 +108,8 @@ export const HeroContent = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-start text-left max-w-4xl">
-      <h3
-        ref={greetingRef}
-        className="text-xl font-medium mb-4"
-      >
+    <div className="flex flex-col items-start text-left">
+      <h3 ref={greetingRef} className="text-xl font-medium mb-4">
         Hello! I'm Pratik.
       </h3>
 
@@ -114,13 +118,13 @@ export const HeroContent = () => {
           ref={headingRef}
           className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight"
         >
-          Designing digital product with emphasis
+          I build fast, scalable, and reliable web apps —
         </h1>
         <h1
           ref={headingEmphasisRef}
           className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight text-muted-foreground/70"
         >
-          on visual design
+          frontend to backend.
         </h1>
       </div>
 
@@ -128,7 +132,8 @@ export const HeroContent = () => {
         ref={subheadingRef}
         className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl"
       >
-        A multidisciplinary developer harnessing the power of design to achieve online goals.
+        I specialize in crafting modern UIs, building secure APIs, and
+        optimizing database-driven systems for real-world impact.
       </p>
     </div>
   );
@@ -150,8 +155,7 @@ export function Hero() {
       contentRef.current,
       { y: 50, opacity: 0 },
       { y: 0, opacity: 1, duration: 1 }
-    )
-    .fromTo(
+    ).fromTo(
       ctaRef.current,
       { y: 20, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.6 },
@@ -212,7 +216,7 @@ export function Hero() {
       ></div>
 
       <div className="container relative z-10 pointer-events-auto">
-        <div className="flex flex-col items-start max-w-5xl">
+        <div className="flex flex-col items-start ">
           <div ref={contentRef}>
             <HeroContent />
           </div>

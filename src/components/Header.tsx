@@ -3,21 +3,10 @@ import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "@/components/ui/button";
 import gsap from "gsap";
-
-const navItems = [
-  { name: "Home", href: "#" },
-  { name: "Experience", href: "#experience" },
-  { name: "Projects", href: "#projects" },
-  { name: "About", href: "#about" },
-  { name: "Contact", href: "#contact" },
-];
+import { NAV_ITEMS, RESUME_LINK } from "@/data";
 
 export const Logo = () => (
   <div className="flex items-center gap-2">
-    <img
-      className="h-10 w-10 rounded-full outline outline-offset-2 outline-primary"
-      src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    />
     <a href="#" className="text-2xl font-display font-bold">
       Pratik Kamble
     </a>
@@ -84,8 +73,9 @@ export function Header() {
   useEffect(() => {
     if (mobileMenuRef.current) {
       const tl = gsap.timeline({ paused: true });
-      
-      tl.fromTo(mobileMenuRef.current, 
+
+      tl.fromTo(
+        mobileMenuRef.current,
         {
           opacity: 0,
           y: -20,
@@ -99,7 +89,8 @@ export function Header() {
       );
 
       // Stagger animate nav items
-      tl.fromTo(navItemsRef.current,
+      tl.fromTo(
+        navItemsRef.current,
         {
           opacity: 0,
           x: -20,
@@ -142,7 +133,7 @@ export function Header() {
               scrolled ? "bg-muted/50" : "bg-muted/30 backdrop-blur-md"
             }`}
           >
-            {navItems.map((item) => (
+            {NAV_ITEMS.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
@@ -156,8 +147,13 @@ export function Header() {
 
         <div className="flex items-center gap-4">
           <ThemeToggle />
-          <a href="#contact">
-            <Button className="hidden md:flex">Get in Touch</Button>
+          <a
+            href={RESUME_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block"
+          >
+            <Button className="hidden md:flex">Download My Resume</Button>
           </a>
 
           <Button
@@ -174,10 +170,7 @@ export function Header() {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div 
-          ref={mobileMenuRef}
-          className="fixed inset-0 z-50 bg-background"
-        >
+        <div ref={mobileMenuRef} className="fixed inset-0 z-50 bg-background">
           <div className="container flex h-16 items-center justify-between">
             <Logo />
             <Button
@@ -190,7 +183,7 @@ export function Header() {
             </Button>
           </div>
           <nav className="container grid gap-6 py-8 border-b bg-background">
-            {navItems.map((item, index) => (
+            {NAV_ITEMS.map((item, index) => (
               <a
                 key={item.name}
                 href={item.href}
@@ -201,8 +194,13 @@ export function Header() {
                 {item.name}
               </a>
             ))}
-            <a href="#contact">
-              <Button className="mt-4">Get in Touch</Button>
+            <a
+              href={RESUME_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block"
+            >
+              <Button className="mt-4">Download My Resume</Button>
             </a>
           </nav>
         </div>

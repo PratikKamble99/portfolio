@@ -3,27 +3,7 @@ import { Button } from "./ui/button";
 import { Calendar, MapPin } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-const experiences = [
-  {
-    id: 2,
-    role: "Software Developer",
-    company: "Ciklum",
-    location: "India", // Update location if needed
-    period: "Dec 2022 - Present",
-    description:
-      "Streamlined development by adopting Micro Frontend Architecture, reducing build time by 60%, and accelerating release cycles. Built scalable web applications using React, TypeScript, Node.js, PostgreSQL, MySQL, Tailwind CSS, and Material UI. Mentored junior developers and interns on clean code, and performance best practices.",
-  },
-  {
-    id: 1,
-    role: "Junior Software Developer",
-    company: "Infogen Labs",
-    location: "India", // Update location if needed
-    period: "June 2022 - Dec 2023",
-    description:
-      "Built reusable UI components in ReactJS, ensuring consistency with design guidelines and enhancing user experience. Gained hands-on experience with ReactJS, Material UI. Proactively fixed bugs in legacy code and collaborated with cross-functional teams to understand best practices and project objectives.",
-  },
-];
+import { EXPERIENCE } from "@/data";
 
 export function Experience() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -38,9 +18,9 @@ export function Experience() {
     // Heading and description animation
     gsap.fromTo(
       [headingRef.current, descriptionRef.current],
-      { 
-        y: 50, 
-        opacity: 0 
+      {
+        y: 50,
+        opacity: 0,
       },
       {
         y: 0,
@@ -52,7 +32,7 @@ export function Experience() {
           start: "top 80%",
           end: "top 50%",
           scrub: 1,
-        }
+        },
       }
     );
 
@@ -68,14 +48,14 @@ export function Experience() {
           start: "top 80%",
           end: "bottom 20%",
           scrub: 1,
-        }
+        },
       }
     );
 
     // Experience cards animation
     experienceRefs.current.forEach((ref, index) => {
       const xOffset = index % 2 === 0 ? 100 : -100;
-      
+
       gsap.fromTo(
         ref,
         {
@@ -93,13 +73,13 @@ export function Experience() {
             start: "top 80%",
             end: "top 60%",
             scrub: 1,
-          }
+          },
         }
       );
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
@@ -132,7 +112,7 @@ export function Experience() {
             />
 
             {/* Experience items */}
-            {experiences.map((exp, index) => (
+            {EXPERIENCE.map((exp, index) => (
               <div
                 key={exp.id}
                 ref={(el) => (experienceRefs.current[index] = el)}
