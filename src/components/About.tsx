@@ -60,10 +60,12 @@ export function About() {
             </h2>
 
             <p className="text-lg text-muted-foreground">
-              I'm a developer and designer with over 5 years of experience
-              crafting digital solutions for clients across various industries.
-              My approach combines technical expertise with creative
-              problem-solving to deliver stunning, functional products.
+              Passionate about building impactful digital solutions I'm a Full
+              Stack Software Developer with over 3 years of experience
+              delivering robust, scalable applications for clients across
+              diverse industries. I blend deep technical expertise in both
+              frontend and backend technologies with a problem-solving mindset
+              to create high-performance, user-centric digital products.
             </p>
 
             <div className="pt-4">
