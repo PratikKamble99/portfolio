@@ -1,7 +1,7 @@
 import { Code, Layout, Lightbulb, Sparkles, DownloadCloud } from "lucide-react";
 
 export const RESUME_LINK =
-  "https://drive.google.com/file/d/1RN4Wtdbs0kS1_aYYDXkwkhlKNR0tNGa2/view?usp=sharing";
+  "https://drive.google.com/file/d/1x2TsHPmxoV6AVKHboQYFWgJ63TnERHU0/view?usp=sharing";
 
 export const SKILLS = [
   {
