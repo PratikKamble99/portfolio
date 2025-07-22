@@ -1,7 +1,7 @@
 import { Code, Layout, Lightbulb, Sparkles, DownloadCloud } from "lucide-react";
 
 export const RESUME_LINK =
-  "https://drive.google.com/file/d/1x2TsHPmxoV6AVKHboQYFWgJ63TnERHU0/view?usp=sharing";
+  "https://drive.google.com/file/d/1PpkhdI-0xfi9cc7LmJU31vJDeodGWKWW/view?usp=drive_link";
 
 export const SKILLS = [
   {
@@ -70,21 +70,6 @@ export const PROJECTS = [
     linkDisabled: true,
   },
   {
-    id: 2,
-    title: "Image-AI: Advanced Image Processing SaaS",
-    description:
-      "Developed a full-fledged Next.js SaaS application from scratch. Implemented authentication, authorization, session/state management, and payment gateway integration. Added object detection and removal, image quality enhancement, and noise reduction features.",
-    tags: [
-      { name: "react", color: "blue-text-gradient" },
-      { name: "mysql", color: "green-text-gradient" },
-      { name: "tailwind", color: "pink-text-gradient" },
-    ],
-    imageSrc: "./imageAi.png",
-    videoURL: null,
-    link: "https://github.com/PratikKamble99/image-ai",
-    linkDisabled: false,
-  },
-  {
     id: 3,
     title: "Expense Tracker: Personal Finance Management",
     description:
@@ -101,7 +86,68 @@ export const PROJECTS = [
     linkDisabled: false,
   },
   {
-    id: 4,
+    id: 2,
+    title: "Image-AI: Advanced Image Processing SaaS",
+    description:
+      "Developed a full-fledged Next.js SaaS application from scratch. Implemented authentication, authorization, session/state management, and payment gateway integration. Added object detection and removal, image quality enhancement, and noise reduction features.",
+    tags: [
+      { name: "react", color: "blue-text-gradient" },
+      { name: "mysql", color: "green-text-gradient" },
+      { name: "tailwind", color: "pink-text-gradient" },
+    ],
+    imageSrc: "./imageAi.png",
+    videoURL: null,
+    link: "https://github.com/PratikKamble99/image-ai",
+    linkDisabled: false,
+  },
+  {
+    id: 5,
+    title: "ONCO Healthcare",
+    description:
+      "Built an appointment booking platform for oncology treatment, allowing patients to schedule consultations with doctors via a user-friendly interface. Integrated Stripe.js for secure, seamless payments and implemented real-time updates for availability and bookings. Enhanced accessibility to oncology care through efficient scheduling and robust backend session handling with JWT.",
+    tags: [
+      { name: "react", color: "blue-text-gradient" },
+      { name: "postgresql", color: "green-text-gradient" },
+      { name: "material UI", color: "pink-text-gradient" },
+      { name: "stripe", color: "blue-text-gradient" },
+      { name: "redux", color: "green-text-gradient" },
+    ],
+    imageSrc: "./oncoHealthcare.png",
+    videoURL: null,
+    link: null,
+    linkDisabled: true,
+  },
+  {
+    id:6,
+    title:"Pontis",
+    description:"Developed a System Health Monitoring and Log Management application to track real-time performance metrics and user activities. Designed a dynamic UI with React.js and Redux that updates based on backend data. Integrated APIs for live system health tracking, log retrieval, and alert notifications for critical issues, enabling proactive issue resolution and enhanced system stability.",
+    tags: [
+      { name: "react", color: "blue-text-gradient" },
+      { name: "material UI", color: "pink-text-gradient" },
+      { name: "redux", color: "green-text-gradient" },
+      { name: "react-chart-js", color: "green-text-gradient" },
+    ],
+    imageSrc: "./pontis.png",
+    videoURL: null,
+    link: null,
+    linkDisabled: true,
+  },
+  {
+    id:7,
+    title:"Munitrix",
+    description:"Built a secure database management frontend using React.js, MUI, and Redux, enabling users to dynamically create, update, and delete tables and columns. Implemented AES, RSA, and SHA-1 encryption protocols to ensure secure API communication and protect sensitive data, aligning with modern security standards.",
+    tags: [
+      { name: "react", color: "blue-text-gradient" },
+      { name: "material UI", color: "pink-text-gradient" },
+      { name: "redux", color: "green-text-gradient" },
+    ],
+    imageSrc: "./munitrix.png",
+    videoURL: null,
+    link: null,
+    linkDisabled: true,
+  },
+  {
+    id:8,
     title: "3D Portfolio: Interactive Portfolio",
     description:
       "Developed an interactive portfolio showcasing 3D design and animation. Implemented dynamic UI with smooth transitions, project highlights, and responsive layout. Technologies used include React, Tailwind, and 3D rendering libraries.",
