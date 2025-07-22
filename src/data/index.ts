@@ -80,7 +80,7 @@ export const PROJECTS = [
       { name: "mongodb", color: "pink-text-gradient" },
       { name: "tailwind", color: "blue-text-gradient" },
     ],
-    imageSrc: "./expenseTracker.png",
+    imageSrc: "./expenseTracker-2.png",
     videoURL: null,
     link: "https://github.com/PratikKamble99/expense-tracker-graphql-react",
     linkDisabled: false,
