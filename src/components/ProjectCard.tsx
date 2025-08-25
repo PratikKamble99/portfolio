@@ -18,6 +18,7 @@ export function ProjectCard({
   videoURL,
   link,
   linkDisabled,
+  tags,
 }: ProjectCardProps) {
   return (
     <Card className="overflow-hidden rounded-lg border bg-background/50 transition-all hover:shadow-md h-full">
@@ -58,8 +59,26 @@ export function ProjectCard({
       <div className="p-6">
         <h3 className="text-xl font-medium leading-tight mb-4">{title}</h3>
         <p className="text-muted-foreground text-base">
-          {description.split(".")[0]}.
+          {description}
         </p>
+        <div className="mt-4">
+          {tags.map((tag) => (
+            <span
+              key={tag.name}
+              className={`inline-flex items-center px-3 py-1.5 mr-2 mb-2 text-xs font-medium rounded-full transition-all duration-200 hover:scale-105 ${
+                tag.color.includes('blue') 
+                  ? 'bg-gradient-to-r from-blue-500 to-blue-600' 
+                  : tag.color.includes('green') 
+                    ? 'bg-gradient-to-r from-emerald-500 to-teal-500' 
+                    : tag.color.includes('pink') 
+                      ? 'bg-gradient-to-r from-pink-500 to-rose-500' 
+                      : 'bg-gradient-to-r from-purple-600 to-pink-500'
+              } text-white shadow-sm`}
+            >
+              {tag.name}
+            </span>
+          ))}
+        </div>
 
         {/* {!linkDisabled && (
           <div className="mt-4">

@@ -18,6 +18,15 @@ export default {
       },
     },
     extend: {
+      backgroundImage: {
+        'purple-pink-gradient': 'linear-gradient(90deg, #8B5CF6 0%, #EC4899 100%)',
+      },
+      textGradient: (theme) => ({
+        'blue': 'linear-gradient(90deg, #3B82F6 0%, #60A5FA 100%)',
+        'green': 'linear-gradient(90deg, #10B981 0%, #34D399 100%)',
+        'pink': 'linear-gradient(90deg, #EC4899 0%, #F472B6 100%)',
+        'purple': 'linear-gradient(90deg, #8B5CF6 0%, #A78BFA 100%)',
+      }),
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
