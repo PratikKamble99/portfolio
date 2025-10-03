@@ -44,6 +44,11 @@ const skills = [
     image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
     level: "Intermediate",
   },
+  {
+    name: "Python",
+    image: "https://cdn.jsdelivr.net/npm/@programming-languages-logos/python@latest/python.svg",
+    level: "Core",
+  },
 ];
 
 export function Skills() {

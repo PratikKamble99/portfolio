@@ -2,7 +2,7 @@ import { v4 as uuid } from "uuid";
 import { Code, Lightbulb, Sparkles } from "lucide-react";
 
 export const RESUME_LINK =
-  "https://drive.google.com/file/d/1PpkhdI-0xfi9cc7LmJU31vJDeodGWKWW/view?usp=drive_link";
+  "https://drive.google.com/drive/u/0/folders/1JHM4UYAYTLnqaaBwJVl6FMLKW-CP-a6e";
 
 export const SKILLS = [
   {
@@ -165,6 +165,24 @@ export const PROJECTS = [
     link: null,
     linkDisabled: true,
   },
+  ,
+  {
+    id: uuid(),
+    title: "Chatbot Application with Generative AI",
+    description:
+      "Developed a chatbot application leveraging Generative AI for natural language understanding and response generation. Integrated with a React frontend and a Node.js backend, utilizing MongoDB for data storage. and GenAI concepts like tool calling, vector databases, and prompt engineering to enhance user interactions.",
+    tags: [
+      { name: "React", color: "blue" },
+      { name: "express", color: "green" },
+      { name: "Rag.js", color: "purple" },
+      { name: "Vector Embeddings", color: "orange" },
+      { name: "tailwind", color: "pink" },
+    ],
+    imageSrc: "./chatbot.png",
+    videoURL: null,
+    link: "https://github.com/PratikKamble99/RAG-pdf-analyzer-chat-bot",
+    linkDisabled: false,
+  },
   {
     id: uuid(),
     title: "3D Portfolio: Interactive Portfolio",
@@ -180,5 +198,5 @@ export const PROJECTS = [
     videoURL: null,
     link: "https://github.com/PratikKamble99/expense-tracker-graphql-react",
     linkDisabled: false,
-  },
+  }
 ];
