@@ -2,7 +2,7 @@ import { v4 as uuid } from "uuid";
 import { Code, Lightbulb, Sparkles } from "lucide-react";
 
 export const RESUME_LINK =
-  "https://drive.google.com/drive/u/0/folders/1JHM4UYAYTLnqaaBwJVl6FMLKW-CP-a6e";
+  "https://drive.google.com/file/d/1PpkhdI-0xfi9cc7LmJU31vJDeodGWKWW/view?usp=drive_link";
 
 export const SKILLS = [
   {
